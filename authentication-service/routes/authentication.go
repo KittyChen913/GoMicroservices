@@ -2,7 +2,9 @@ package routes
 
 import (
 	"authentication-service/models"
+	"authentication-service/utils"
 	"fmt"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,4 +26,11 @@ func Authentication(context *gin.Context) {
 	}
 	fmt.Println(dbUser)
 
+	// 驗證密碼
+	hashCompareResult := utils.CompareHashAndPassword(dbUser.Password, user.Password)
+	if hashCompareResult == nil {
+		context.JSON(http.StatusOK, gin.H{"result": true})
+	} else {
+		context.JSON(http.StatusOK, gin.H{"result": false})
+	}
 }
