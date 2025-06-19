@@ -8,4 +8,7 @@ import (
 
 func RegisterRoutes(server *gin.Engine) {
 	server.Use(middlewares.ErrorHandle)
+
+	authentication := server.Group("/")
+	authentication.POST("/Authentication", Authentication)
 }
