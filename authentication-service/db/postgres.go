@@ -2,16 +2,19 @@ package db
 
 import (
 	"context"
+	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 var DbPool *pgxpool.Pool
 
 func InitDb() {
 	var err error
+	connStr := os.Getenv("postgresDB")
 
-	config, err := pgxpool.ParseConfig("postgresql://postgres:password@postgres-db/users")
+	config, err := pgxpool.ParseConfig(connStr)
 	if err != nil {
 		panic("Unable to connect to the database.")
 	}

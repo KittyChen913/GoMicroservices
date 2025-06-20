@@ -26,6 +26,7 @@ services:
       replicas: 1
     environment:
       - PORT=8080
+      - postgresDB=postgresql://postgres:password@postgres-db/users
     volumes:
       - ./authentication-service:/app
 
