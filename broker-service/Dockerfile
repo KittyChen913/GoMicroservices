@@ -5,7 +5,7 @@ FROM golang:1.24 AS build-stage
 
 WORKDIR /app
 
-COPY go.mod go.sum ./
+COPY . .
 RUN go mod download
 
 COPY *.go ./

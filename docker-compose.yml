@@ -12,6 +12,7 @@ services:
       replicas: 1
     environment:
       - PORT=8080
+      - AuthApiUrl=http://authentication-service:8080/Authentication
     volumes:
       - ./broker-service:/app
 
