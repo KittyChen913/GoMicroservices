@@ -1,10 +1,55 @@
 <!DOCTYPE html>
-<html lang="zh-Hant">
+<html lang="zh-tw">
 <head>
     <meta charset="UTF-8">
-    <title>microservices test page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微服務前端</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-    <h1>microservices test page</h1>
+    <div class="container">
+        <h1>微服務測試</h1>
+        <button onclick="testAuth()">測試 Auth</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+    function testAuth() {
+        fetch("http://localhost:8080/Authentication", {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                Email : "admin@example.com",
+                Password: "password"
+            })
+        })
+        .then(response => {
+            document.getElementById("output").innerHTML = `狀態碼: ${response.status}`;
+            return response.json().catch(() => null);
+        })
+        .then(data => {
+            if (data) {
+                document.getElementById("output").innerHTML += `<br>回應內容: ${JSON.stringify(data)}`;
+            }
+        })
+        .catch(error => {
+            document.getElementById("output").innerHTML = `錯誤: ${error.message}`;
+        });
+    }
+    </script>
 </body>
 </html>
