@@ -3,8 +3,11 @@ package routes
 import (
 	"authentication-service/models"
 	"authentication-service/utils"
+	"bytes"
+	"encoding/json"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -29,8 +32,30 @@ func Authentication(context *gin.Context) {
 	// 驗證密碼
 	hashCompareResult := utils.CompareHashAndPassword(dbUser.Password, user.Password)
 	if hashCompareResult == nil {
+		err := WriteLog("authentication", fmt.Sprintf("%v logged in", user.Email))
+		if err != nil {
+			context.Error(err)
+			return
+		}
 		context.JSON(http.StatusOK, gin.H{"result": true})
 	} else {
 		context.JSON(http.StatusOK, gin.H{"result": false})
 	}
+}
+
+func WriteLog(name, data string) error {
+
+	var logDetail struct {
+		Name string
+		Data string
+	}
+	logDetail.Name = name
+	logDetail.Data = data
+
+	jsonData, _ := json.Marshal(logDetail)
+	_, err := http.Post(os.Getenv("LoggerApiUrl"), "application/json", bytes.NewBuffer(jsonData))
+	if err != nil {
+		return err
+	}
+	return nil
 }

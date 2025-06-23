@@ -28,6 +28,7 @@ services:
     environment:
       - PORT=8080
       - postgresDB=postgresql://postgres:password@postgres-db/users
+      - LoggerApiUrl=http://logger-service:8080/WriteLog
     volumes:
       - ./authentication-service:/app
 
