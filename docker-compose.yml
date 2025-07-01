@@ -1,6 +1,17 @@
 version: '3.9'
 
 services:
+  # Frontend Service
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "1217:1217"
+    deploy:
+      mode: replicated
+      replicas: 1
+
   # API Service
   broker-service:
     build:
