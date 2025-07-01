@@ -1,6 +1,7 @@
-version: '3'
+version: '3.9'
 
 services:
+  # API Service
   broker-service:
     build:
       context: ./broker-service
@@ -31,6 +32,8 @@ services:
       - LoggerApiUrl=http://logger-service:8080/WriteLog
     volumes:
       - ./authentication-service:/app
+    depends_on:
+      - postgres-db
 
   logger-service:
     build:
@@ -46,7 +49,10 @@ services:
       - mongoDB=mongodb://mongo:password@mongo-db:27017
     volumes:
       - ./logger-service:/app
+    depends_on:
+      - mongo-db
 
+  # DB
   postgres-db:
     image: 'postgres:14.2'
     ports:
@@ -61,6 +67,7 @@ services:
       POSTGRES_DB: users
     volumes:
       - ./db-data/postgres/:/var/lib/postgresql/data/
+
   mongo-db:
     image: mongo:8.0.10
     ports:
