@@ -23,6 +23,7 @@ services:
       mode: replicated
       replicas: 1
     environment:
+      - TZ=Asia/Taipei
       - PORT=8080
       - AuthApiUrl=http://authentication-service:8080/Authentication
     volumes:
@@ -38,6 +39,7 @@ services:
       mode: replicated
       replicas: 1
     environment:
+      - TZ=Asia/Taipei
       - PORT=8080
       - postgresDB=postgresql://postgres:password@postgres-db/users
       - LoggerApiUrl=http://logger-service:8080/WriteLog
@@ -56,6 +58,7 @@ services:
       mode: replicated
       replicas: 1
     environment:
+      - TZ=Asia/Taipei
       - PORT=8080
       - mongoDB=mongodb://mongo:password@mongo-db:27017
     volumes:
