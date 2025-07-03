@@ -40,6 +40,6 @@ func InitDb() {
 		if i == retryCount {
 			panic("Database ping failed: " + err.Error())
 		}
-		time.Sleep(2 * time.Second)
+		time.Sleep(5 * time.Second)
 	}
 }
