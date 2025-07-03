@@ -63,6 +63,7 @@ services:
       - mongoDB=mongodb://mongo:password@mongo-db:27017
     volumes:
       - ./logger-service:/app
+      - log-data:/logs
     depends_on:
       - mongo-db
 

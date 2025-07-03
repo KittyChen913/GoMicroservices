@@ -11,4 +11,5 @@ func RegisterRoutes(server *gin.Engine) {
 
 	logger := server.Group("/")
 	logger.POST("/WriteLog", WriteLog)
+	logger.POST("/WriteAccessLog", WriteAccessLog)
 }
